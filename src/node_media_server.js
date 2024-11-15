@@ -11,6 +11,7 @@ const NodeHttpServer = require('./node_http_server');
 const NodeTransServer = require('./node_trans_server');
 const NodeRelayServer = require('./node_relay_server');
 const NodeFissionServer = require('./node_fission_server');
+const NodeRestreamServer = require('./node_restream_server');
 const context = require('./node_core_ctx');
 const Package = require('../package.json');
 
@@ -39,6 +40,11 @@ class NodeMediaServer {
         this.nts = new NodeTransServer(this.config);
         this.nts.run();
       }
+    }
+
+    if(this.config.restream) {
+      this.nfls = new NodeRestreamServer(this.config);
+      this.nfls.run();
     }
 
     if (this.config.relay) {
