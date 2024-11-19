@@ -39,7 +39,7 @@ class NodeRestreamSession extends EventEmitter {
       x=(w-text_w)/2:y=280:fontsize=15:fontcolor=black:font=Times:alpha=0.3, \
        drawtext=text='%{gmtime\\:%Y/%m/%d %T}': \
        x=(w-text_w)/2:y=330:fontsize=15:fontcolor=black:font=Times",
-           '-c', 'libx264', '-r',12, '-b:v','4500k', '-pix_fmt','yuv420p10le', '-f', format, this.conf.ouPath]
+           '-c', 'libx264', '-r',12.5, '-b:v','4500k', '-pix_fmt','yuv420p10le', '-f', format, this.conf.ouPath]
           break;
       case "persistence":
         argv = ["-c",`sleep infinity > ${this.conf.inPath}`];
