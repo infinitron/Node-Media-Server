@@ -21,14 +21,14 @@ class NodeRestreamSession extends EventEmitter {
   }
 
   run(processType="restream") {
-    // let format = this.conf.ouPath.startsWith('rtmp://') ? 'flv' : 'mpegts';
+    let format = this.conf.inPath.startsWith('rtmp://') ? 'lvie_flv' : 'flv';
     // let format = 'mpegts';
-    let format = 'flv';
+    // let format = 'flv';
     let argv = [];
     switch(processType){
       case "restream":
-        argv = ['-y','-copyts','-i',
-          this.conf.inPath, '-c', 'h264', '-f', format, this.conf.ouPath];
+        argv = ['-y','-copyts','-fflags','discardcorrupt','-i',
+          this.conf.inPath,'-avoid_negative_ts','make_non_negative', '-c', 'h264', '-f', format, this.conf.ouPath];
         break;
       case "fallback":
         argv = ['-re','-y','-use_wallclock_as_timestamps','1','-f', 'lavfi','-stream_loop', '-1', '-i','color=c=black:s=512x512',
