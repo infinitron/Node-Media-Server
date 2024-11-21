@@ -26,11 +26,11 @@ class NodeRestreamSession extends EventEmitter {
     let argv = [];
     switch(processType){
       case "restream":
-        argv = ['-y','-fflags','igndts','-fflags','genpts','-i',
+        argv = ['-y','-copyts','-i',
           this.conf.inPath, '-c', 'h264', '-f', format, this.conf.ouPath];
         break;
       case "fallback":
-        argv = ['-re','-y','-f', 'lavfi','-stream_loop', '-1', '-i','color=c=black:s=512x512',
+        argv = ['-re','-y','-use_wallclock_as_timestamps','1','-f', 'lavfi','-stream_loop', '-1', '-i','color=c=black:s=512x512',
           '-vf',"drawbox=x=80:y=180:w=352:h=200:color=white:t=fill, \
        drawtext=text='Uh oh, signal lost!':x=(w-text_w)/2:y=200:fontsize=30:fontcolor=black:font=Times, \
        drawtext=text='We should be back in 5 minutes.': \
