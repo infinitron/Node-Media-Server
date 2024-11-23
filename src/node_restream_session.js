@@ -21,7 +21,7 @@ class NodeRestreamSession extends EventEmitter {
   }
 
   run(processType="restream") {
-    let format = this.conf.inPath.startsWith('rtmp://') ? 'lvie_flv' : 'flv';
+    let format = this.conf.inPath.startsWith('rtmp://') ? 'live_flv' : 'flv';
     // let format = 'mpegts';
     // let format = 'flv';
     let argv = [];
