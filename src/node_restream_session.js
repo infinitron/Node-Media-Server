@@ -27,8 +27,8 @@ class NodeRestreamSession extends EventEmitter {
     let argv = [];
     switch(processType){
       case "restream":
-        argv = ['-y','-copyts','-fflags','discardcorrupt','-i',
-          this.conf.inPath,'-avoid_negative_ts','make_non_negative', '-c', 'h264', '-f', format, this.conf.ouPath];
+        argv = ['-y','-i',
+          this.conf.inPath, '-c', 'h264', '-f', format, this.conf.ouPath];
         break;
       case "fallback":
         argv = ['-re','-y','-use_wallclock_as_timestamps','1','-f', 'lavfi','-stream_loop', '-1', '-i','color=c=black:s=512x512',
@@ -39,7 +39,7 @@ class NodeRestreamSession extends EventEmitter {
       drawtext=text='If not, read this message again.': \
       x=(w-text_w)/2:y=280:fontsize=15:fontcolor=black:font=Times:alpha=0.3, \
        drawtext=text='%{gmtime\\:%Y/%m/%d %T}': \
-       x=(w-text_w)/2:y=330:fontsize=15:fontcolor=black:font=Times",
+       x=(w-text_w)/2:y=330:fontsize=15:fontcolor=black:font=Times,fps=12.5",
            '-c', 'libx264', '-r',12.5, '-b:v','4500k', '-pix_fmt','yuv420p10le', '-f', format, this.conf.ouPath]
           break;
       case "persistence":
