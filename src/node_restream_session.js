@@ -21,25 +21,25 @@ class NodeRestreamSession extends EventEmitter {
   }
 
   run(processType="restream") {
-    // let format = this.conf.inPath.startsWith('rtmp://') ? 'live_flv' : 'flv';
+    let format = this.conf.ouPath.startsWith('rtmp://') ? 'flv' : 'mpegts';
     // let format = 'mpegts';
-    let format = 'flv';
+    // let format = 'flv';
     let argv = [];
     switch(processType){
       case "restream":
-        argv = ['-y','-i',
-          this.conf.inPath, '-c', 'h264', '-f', format, this.conf.ouPath];
+        argv = ['-y','-fflags','igndts','-fflags','genpts','-i',
+          this.conf.inPath, '-c', 'h264','-f', format, this.conf.ouPath];
         break;
       case "fallback":
-        argv = ['-re','-y','-use_wallclock_as_timestamps','1','-f', 'lavfi','-stream_loop', '-1', '-i','color=c=black:s=512x512',
-          '-vf',"drawbox=x=80:y=180:w=352:h=200:color=white:t=fill, \
+        argv = ['-re','-y','-f', 'lavfi','-stream_loop', '-1', '-i','color=c=black:s=512x512',
+          '-lavfi',"drawbox=x=80:y=180:w=352:h=200:color=white:t=fill, \
        drawtext=text='Uh oh, signal lost!':x=(w-text_w)/2:y=200:fontsize=30:fontcolor=black:font=Times, \
        drawtext=text='We should be back in 5 minutes.': \
        x=(w-text_w)/2:y=250:fontsize=15:fontcolor=black:font=Times, \
       drawtext=text='If not, read this message again.': \
       x=(w-text_w)/2:y=280:fontsize=15:fontcolor=black:font=Times:alpha=0.3, \
        drawtext=text='%{gmtime\\:%Y/%m/%d %T}': \
-       x=(w-text_w)/2:y=330:fontsize=15:fontcolor=black:font=Times;fps=12.5",
+       x=(w-text_w)/2:y=330:fontsize=15:fontcolor=black:font=Times,fps=12.5",
            '-c', 'libx264', '-r',12.5, '-b:v','4500k', '-pix_fmt','yuv420p10le', '-f', format, this.conf.ouPath]
           break;
       case "persistence":

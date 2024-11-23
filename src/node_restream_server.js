@@ -135,7 +135,7 @@ class NodeRestreamServer {
         });
         this.fallbackSessions.set(stream, session);
         session.run("fallback");
-        Logger.log('[Restream task: fallback to pipe push] stop id=' + streamPath, ' fallback to', conf.ouPath);
+        Logger.log('[Restream task: fallback to pipe push] stop id=' + streamPath, ' starting fallback to', conf.ouPath);
       }
     }
   }
